@@ -1,4 +1,4 @@
-# Memento: Fine-tuning LLM Agents **without** Fine-tuning LLMs
+# Memora: Fine-tuning LLM Agents **without** Fine-tuning LLMs
 
 > **First framework to run fully on consumer hardware (M4 MacBook) without requiring OpenAI APIs.** Memory-based continual learning with seamless local/cloud LLM integration.
 
@@ -25,12 +25,12 @@
     <td align="center" width="50%">
       <img src="Figure/f1_val_test.jpg" width="90%"/>
       <br/>
-      <sub><b>Memento vs. Baselines on GAIA validation and test sets.</b></sub>
+      <sub><b>Memora vs. Baselines on GAIA validation and test sets.</b></sub>
     </td>
     <td align="center" width="50%">
       <img src="Figure/f1_tasks.jpg" width="90%"/>
       <br/>
-      <sub><b>Ablation study of Memento across benchmarks.</b></sub>
+      <sub><b>Ablation study of Memora across benchmarks.</b></sub>
     </td>
   </tr>
   <tr>
@@ -42,12 +42,12 @@
     <td align="center" width="50%">
       <img src="Figure/f1_ood.jpg" width="90%"/>
       <br/>
-      <sub><b>Memento’s accuracy improvement on OOD datasets.</b></sub>
+      <sub><b>Memora’s accuracy improvement on OOD datasets.</b></sub>
     </td>
   </tr>
 </table>
 
-## ✨ What Makes Memento Special
+## ✨ What Makes Memora Special
 
 🏠 **Runs 100% Locally** - No OpenAI API required! Uses Ollama with consumer hardware  
 🧠 **Memory-Based Learning** - Agents improve from experience without model fine-tuning  
@@ -74,7 +74,7 @@ Q: "What about that place we discussed?"
 A: "I don't have context about what place you're referring to."
 ```
 
-**With Memento** (Memory-Augmented):
+**With Memora** (Memory-Augmented):
 ```
 Q: "What's the capital of France?" 
 A: "Paris" [Stored in memory: France → Paris]
@@ -121,8 +121,8 @@ curl -fsSL https://ollama.ai/install.sh | sh
 ollama pull qwen2.5:14b  # For 16GB+ RAM
 
 # 2. Clone & run
-git clone https://github.com/Agent-on-the-Fly/Memento
-cd Memento && pip install -r requirements.txt
+git clone https://github.com/21bq1a4232/Memora.git
+cd Memora && pip install -r requirements.txt
 python client/agent.py  # Zero config - auto-detects Ollama!
 ```
 
@@ -137,8 +137,8 @@ python client/agent.py  # Auto-detects OpenAI backend
 
 ```bash
 # Reproducible research environment
-git clone https://github.com/Agent-on-the-Fly/Memento
-cd Memento && pip install -r requirements.txt
+git clone https://github.com/21bq1a4232/Memora.git
+cd Memora && pip install -r requirements.txt
 python -c "import random; random.seed(42)"  # Seed control
 python client/agent.py --question "Your research question"
 ```
@@ -156,12 +156,6 @@ python client/agent.py --question "Design a microservice architecture"
 python client/agent.py --question "Compare agent architectures" > research_log.txt
 ```
 
-## 📖 Documentation
-
-- **[Research Paper](docs/Research.md)** - Detailed technical contributions and benchmarks
-- **[Setup Guide](docs/Setup.md)** - Comprehensive installation and configuration  
-- **[Examples](examples/)** - Real-world use cases and demonstrations
-- **[API Reference](docs/API.md)** - Complete API documentation
 
 ## ⚠️ Limitations & Future Work
 
@@ -182,20 +176,20 @@ See [docs/Research.md](docs/Research.md) for detailed technical analysis and ben
 
 ## 📚 Citation
 
-If Memento helps your work, please cite:
+If Memora helps your work, please cite:
 
 ```bibtex
-@article{zhou2025agentfly,
-  title={AgentFly: Fine-tuning LLM Agents without Fine-tuning LLMs},
-  author={Zhou, Huichi and Chen, Yihang and Guo, Siyuan and Yan, Xue and Lee, Kin Hei and Wang, Zihan and Lee, Ka Yiu and Zhang, Guchun and Shao, Kun and Yang, Linyi and others},
-  journal={arXiv preprint arXiv:2508.16153},
-  year={2025}
+@software{memora2025,
+  title={Memora: Adaptive AI Agents with Memory},
+  author={Danda, Pranav Krishna},
+  year={2025},
+  url={https://github.com/<your-username>/Memora}
 }
 
-@article{huang2025deep,
-  title={Deep Research Agents: A Systematic Examination And Roadmap},
-  author={Huang, Yuxuan and Chen, Yihang and Zhang, Haozheng and Li, Kang and Fang, Meng and Yang, Linyi and Li, Xiaoguang and Shang, Lifeng and Xu, Songcen and Hao, Jianye and others},
-  journal={arXiv preprint arXiv:2506.18096},
+@article{zhou2025agentfly,
+  title={AgentFly: Fine-tuning LLM Agents without Fine-tuning LLMs},
+  author={Zhou, Huichi and others},
+  journal={arXiv preprint arXiv:2508.16153},
   year={2025}
 }
 ```
@@ -215,6 +209,3 @@ We welcome contributions! Please see our contributing guidelines for:
 
 ---
 
-## Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=Agent-on-the-Fly/Memento&type=Date)](https://www.star-history.com/#Agent-on-the-Fly/Memento&Date)
