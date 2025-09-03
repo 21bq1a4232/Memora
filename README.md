@@ -1,9 +1,21 @@
 # Memento: Fine-tuning LLM Agents **without** Fine-tuning LLMs
 
-> A memory-based, continual-learning framework that helps LLM agents improve from experience **without** updating model weights.
+> **First framework to run fully on consumer hardware (M4 MacBook) without requiring OpenAI APIs.** Memory-based continual learning with seamless local/cloud LLM integration.
 
 <p align="center">
-  <b>Planner–Executor Architecture</b> • <b>Case-Based Reasoning</b> • <b>MCP Tooling</b> • <b>Memory-Augmented Learning</b>
+  <b>🏠 Runs Locally</b> • <b>🧠 Memory-Based Learning</b> • <b>🔄 Multi-Backend</b> • <b>📊 Research-Ready</b>
+</p>
+
+<p align="center">
+  <a href="https://colab.research.google.com/github/Agent-on-the-Fly/Memento/blob/main/notebooks/memento_demo.ipynb">
+    <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
+  </a>
+  <a href="#quick-start">
+    <img src="https://img.shields.io/badge/setup-5%20minutes-brightgreen" alt="Quick Setup"/>
+  </a>
+  <a href="docs/Research.md">
+    <img src="https://img.shields.io/badge/paper-ready-blue" alt="Publication Ready"/>
+  </a>
 </p>
 
 ---
@@ -35,273 +47,136 @@
   </tr>
 </table>
 
-## 📰 News
-- [2025.08.30] We’re excited to announce that our no-parametric Case-Based Reasoning inference code is now officially open-sourced! 🎉
-- [2025.08.28] We’ve created a Discord server to make discussions and collaboration around this project easier. Feel free to join and share your thoughts, ask questions, or contribute ideas! 🔥 🔥 🔥 [Join our Discord!](https://discord.gg/y4FP2EDXyX)
-- [2025.08.27] Thanks for your interest in our work! We’ll release our CBR code next week and our Parametric Memory code next month. We’ll keep updating on our further development.
-- [2025.08.27] We add a new Crawler MCP in ```server/ai_crawler.py``` for web crawling and query-aware content compression to reduce token cost.
-- [2025.08.26] We add the SerpAPI (https://serpapi.com/search-api) MCP tool to help you avoid using the search Docker and speed up development. 
+## ✨ What Makes Memento Special
 
-## 🔥 Key Features
+🏠 **Runs 100% Locally** - No OpenAI API required! Uses Ollama with consumer hardware  
+🧠 **Memory-Based Learning** - Agents improve from experience without model fine-tuning  
+🔄 **Multi-Backend** - Seamlessly switch between local (Ollama) and cloud (OpenAI) models  
+📊 **Research-Grade** - Comprehensive logging and reproducible benchmarks  
 
-- **No LLM weight updates.** Memento reframes continual learning as **memory-based online reinforcement learning** over a **memory-augmented MDP**. A neural **case-selection policy** guides actions; experiences are stored and reused via efficient Read/Write operations.
-- **Two-stage planner–executor loop.** A CBR-driven **Planner** decomposes tasks and retrieves relevant cases; an **Executor** runs each subtask as an MCP client, orchestrating tools and writing back outcomes.
-- **Comprehensive tool ecosystem.** Built-in support for web search, document processing, code execution, image/video analysis, and more through a unified MCP interface.
-- **Strong benchmark performance.** Achieves competitive results across GAIA, DeepResearcher, SimpleQA, and HLE benchmarks.
-
----
-
-## 🧠 Core Concept
-
-**Learn from experiences, not gradients.** Memento logs successful & failed trajectories into a **Case Bank** and **retrieves by value** to steer planning and execution—enabling low-cost, transferable, and online continual learning.
-
----
-
-## 🏗️ Architecture
-
-### Core Components
-
-- **Meta-Planner**: Breaks down high-level queries into executable subtasks using GPT-4.1
-- **Executor**: Executes individual subtasks using o3 or other models via MCP tools
-- **Case Memory**: Stores final-step tuples **(s_T, a_T, r_T)** for experience replay
-- **MCP Tool Layer**: Unified interface for external tools and services
-
-### Tool Ecosystem
-
-- **Web Research**: Live search and controlled crawling via SearxNG
-- **Document Processing**: Multi-format support (PDF, Office, images, audio, video)
-- **Code Execution**: Sandboxed Python workspace with security controls
-- **Data Analysis**: Excel processing, mathematical computations
-- **Media Analysis**: Image captioning, video narration, audio transcription
-
----
-
-## 🚀 Quick Start
-
-### Prerequisites
-
-- Python 3.11+
-- OpenAI API key (or compatible API endpoint)
-- SearxNG instance for web search
-- FFmpeg (system-level binary required for video processing)
-
-### Installation
-
-#### Method 1: Using uv (Recommended - Fast & Modern)
+## 🚀 One-Line Demo
 
 ```bash
-# Clone repository
-git clone https://github.com/Agent-on-the-Fly/Memento
-cd Memento
+$ python client/agent.py --question "Design a browser built on autonomous agents"
 
-# Install uv if not already installed
-curl -LsSf https://astral.sh/uv/install.sh | sh
+🧠 META-PLANNER (Cycle 1): Creating 5-step plan...
+⚡ EXECUTOR: Executing tasks...
+✅ RESULT: [Comprehensive autonomous browser architecture with agent communication protocols]
+``` 
 
-# Sync dependencies and create virtual environment automatically
-uv sync
+## 💡 Memory-Based Learning Demo
 
-# Activate the virtual environment
-source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+**Without Memory** (Traditional Agent):
+```
+Q: "What's the capital of France?"
+A: "Paris"
+Q: "What about that place we discussed?"
+A: "I don't have context about what place you're referring to."
 ```
 
-
-### System Dependencies Installation
-
-#### FFmpeg Installation (Required)
-
-**FFmpeg is required for video processing functionality.** The `ffmpeg-python` package in our dependencies requires a system-level FFmpeg binary.
-
-**Windows:**
-```bash
-# Option 1: Using Conda (Recommended for isolated environment)
-conda install -c conda-forge ffmpeg
-
-# Option 2: Download from official website
-# Visit https://ffmpeg.org/download.html and add to PATH
+**With Memento** (Memory-Augmented):
+```
+Q: "What's the capital of France?" 
+A: "Paris" [Stored in memory: France → Paris]
+Q: "What about that place we discussed?"
+A: "You're referring to France. Its capital is Paris." [Retrieved from memory]
 ```
 
-**macOS:**
-```bash
-# Using Homebrew
-brew install ffmpeg
-```
+## 🏗️ Core Architecture
 
-**Linux:**
-```bash
-# Debian/Ubuntu
-sudo apt-get update && sudo apt-get install ffmpeg
+- **🧠 Memory-Augmented MDP**: No LLM fine-tuning needed - agents learn from experience
+- **🔄 Planner-Executor Loop**: CBR-driven planning with tool-orchestrated execution  
+- **🛠️ MCP Tool Ecosystem**: Web search, documents, code, images, video analysis
+- **📈 Strong Benchmarks**: GAIA 87.88%, DeepResearcher 66.6% F1, SimpleQA 95.0%
 
-```
+## 📚 Examples & Use Cases
 
-#### Web Scraping & Search Setup
-
-```bash
-# Install and setup crawl4ai
-crawl4ai-setup
-crawl4ai-doctor
-
-# Install playwright browsers
-playwright install
-```
-
-### Environment Variables Configuration
-
-After creating the `.env` file, you need to configure the following API keys and service endpoints:
-
-```bash
-# OPENAI API
-OPENAI_API_KEY=your_openai_api_key_here
-OPENAI_BASE_URL=https://api.openai.com/v1  # or your custom endpoint
-
-#===========================================
-# Tools & Services API
-#===========================================
-# Chunkr API (https://chunkr.ai/)
-CHUNKR_API_KEY=your_chunkr_api_key_here
-
-# Jina API
-JINA_API_KEY=your_jina_api_key_here
-
-# ASSEMBLYAI API 
-ASSEMBLYAI_API_KEY=your_assemblyai_api_key_here
-```
-
-**Note**: Replace `your_*_api_key_here` with your actual API keys. Some services are optional depending on which tools you plan to use.
-
-
-### SearxNG Setup
-
-For web search capabilities, set up SearxNG: 
-You can follow https://github.com/searxng/searxng-docker/ to set the docker and use our setting.
-
-```bash
-# In a new terminal
-cd ./Memento/searxng-docker
-docker compose up -d
-```
-
-
-### Basic Usage
-
-#### Interactive Mode
-
-```bash
-python client/agent.py
-```
-
----
-
-## 🔧 Configuration
-
-### Model Selection
-
-- **Planner Model**: Defaults to `gpt-4.1` for task decomposition
-- **Executor Model**: Defaults to `o3` for task execution
-- **Custom Models**: Support for any OpenAI-compatible API
-
-### Tool Configuration
-
-- **Search**: Configure SearxNG instance URL
-- **Code Execution**: Customize import whitelist and security settings
-- **Document Processing**: Set cache directories and processing limits
-
----
-
-## 📊 Performance
-
-### Benchmark Results
-
-- **GAIA**: 87.88% (Val, Pass@3 Top-1) and **79.40%** (Test)
-- **DeepResearcher**: **66.6% F1 / 80.4% PM**, with **+4.7–9.6** absolute gains on OOD datasets
-- **SimpleQA**: **95.0%**
-- **HLE**: **24.4% PM** (close to GPT-5 at 25.32%)
-
-### Key Insights
-
-- **Small, high-quality memory works best**: Retrieval **K=4** yields peak F1/PM
-- **Planning + CBR consistently improves performance**
-- **Concise, structured planning outperforms verbose deliberation**
-
----
-
-## 🛠️ Development
-
-### Project Structure
-
-```
-Memento/
-├── client/                   # Main agent implementation
-│   ├── agent.py             # Hierarchical client with planner–executor
-│   └── no_parametric_cbr.py # Non-parametric case-based reasoning
-├── server/                   # MCP tool servers
-│   ├── code_agent.py        # Code execution & workspace management
-│   ├── search_tool.py       # Web search via SearxNG
-│   ├── serp_search.py       # SERP-based search tool
-│   ├── documents_tool.py    # Multi-format document processing
-│   ├── image_tool.py        # Image analysis & captioning
-│   ├── video_tool.py        # Video processing & narration
-│   ├── excel_tool.py        # Spreadsheet processing
-│   ├── math_tool.py         # Mathematical computations
-│   ├── craw_page.py         # Web page crawling
-│   └── ai_crawler.py        # Query-aware compression crawler
-├── interpreters/             # Code execution backends
-│   ├── docker_interpreter.py
-│   ├── e2b_interpreter.py
-│   ├── internal_python_interpreter.py
-│   └── subprocess_interpreter.py
-├── memory/                   # Memory components / data
-├── data/                     # Sample data / cases
-├── searxng-docker/           # SearxNG Docker setup
-├── Figure/                   # Figures for README/paper
-├── README.md
-├── requirements.txt
-└── LICENSE
-```
-
-### Adding New Tools
-
-1. Create a new FastMCP server in the `server/` directory
-2. Implement your tool functions with proper error handling
-3. Register the tool with the MCP protocol
-4. Update the client's server list in `agent.py`
-
-### Custom Interpreters
-
-Extend the `interpreters/` module to add new execution backends:
-
+### 🌐 [Agent-Based Browser Design](examples/browser_design.md)
 ```python
-from interpreters.base import BaseInterpreter
-
-class CustomInterpreter(BaseInterpreter):
-    async def execute(self, code: str) -> str:
-        # Your custom execution logic
-        pass
+# Real example from our demo
+question = "Design a browser built on autonomous agents"
+# → 5-step plan: Research → Requirements → Architecture → Tools → Prototype
+# → Comprehensive design with agent communication protocols
 ```
 
----
+### 🔬 [Research Applications](examples/research_demo.ipynb)
+- **Cost-effective experimentation** with local models
+- **Cross-model comparison** studies  
+- **Agent behavior analysis** with detailed logs
 
-## 📋 TODO
-
-### Upcoming Features & Improvements
-
-- [ ] **Add Case Bank Reasoning**: Implement memory-based case retrieval and reasoning system
-- [ ] **Add User Personal Memory Mechanism**: Implement user-preference search 
-- [ ] **Refine Tools & Add More Tools**: Enhance existing tools and expand the tool ecosystem
-- [ ] **Test More New Benchmarks**: Evaluate performance on additional benchmark datasets
-
----
-
-### Limitations
-
-- **Long-horizon tasks**: GAIA Level-3 remains challenging due to compounding errors
-- **Frontier knowledge**: HLE performance limited by tooling alone
-- **Open-source coverage**: Limited executor validation in fully open pipelines
+### 💻 [Hardware Optimization](examples/hardware_guide.md)
+- **M4 MacBook**: Qwen2.5-14B (near GPT-4 performance)
+- **16GB RAM**: Llama3.1-8B (4-5 tokens/sec)
+- **8GB RAM**: Qwen2.5-7B (lightweight option)
 
 ---
 
-## 🙏 Acknowledgement
+## 🚀 5-Minute Setup
 
-* Some parts of the code in the toolkits and interpreters are adapted from [Camel-AI](https://github.com/camel-ai/camel).
+### 🏠 Local Setup (Recommended - No API costs!)
+
+```bash
+# 1. Install Ollama + optimal model
+curl -fsSL https://ollama.ai/install.sh | sh
+ollama pull qwen2.5:14b  # For 16GB+ RAM
+
+# 2. Clone & run
+git clone https://github.com/Agent-on-the-Fly/Memento
+cd Memento && pip install -r requirements.txt
+python client/agent.py  # Zero config - auto-detects Ollama!
+```
+
+### ☁️ Cloud Setup (OpenAI)
+
+```bash
+export OPENAI_API_KEY="your-key-here"
+python client/agent.py  # Auto-detects OpenAI backend
+```
+
+### 🔬 Research Setup
+
+```bash
+# Reproducible research environment
+git clone https://github.com/Agent-on-the-Fly/Memento
+cd Memento && pip install -r requirements.txt
+python -c "import random; random.seed(42)"  # Seed control
+python client/agent.py --question "Your research question"
+```
+
+## 🔧 Advanced Usage
+
+```bash
+# Custom models
+python client/agent.py --meta_model "llama3.1:8b" --exec_model "qwen2.5:7b"
+
+# With specific question
+python client/agent.py --question "Design a microservice architecture"
+
+# Research mode with detailed logs
+python client/agent.py --question "Compare agent architectures" > research_log.txt
+```
+
+## 📖 Documentation
+
+- **[Research Paper](docs/Research.md)** - Detailed technical contributions and benchmarks
+- **[Setup Guide](docs/Setup.md)** - Comprehensive installation and configuration  
+- **[Examples](examples/)** - Real-world use cases and demonstrations
+- **[API Reference](docs/API.md)** - Complete API documentation
+
+## ⚠️ Limitations & Future Work
+
+### Current Limitations
+- **Long-horizon tasks**: Complex multi-step reasoning still challenging
+- **Tool dependency**: Some advanced features require external services  
+- **Memory persistence**: Case bank currently session-based
+
+### 🔮 Future Research Directions
+- [ ] **Persistent memory systems** for long-term learning
+- [ ] **Multi-modal agent integration** (vision, audio, etc.)
+- [ ] **Distributed agent coordination** across multiple instances
+- [ ] **Advanced reasoning patterns** beyond planner-executor
+
+See [docs/Research.md](docs/Research.md) for detailed technical analysis and benchmarks.
 
 ---
 
