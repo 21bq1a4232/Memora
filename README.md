@@ -143,7 +143,7 @@ If Memora helps your work, please cite:
   title={Memora: Adaptive AI Agents with Memory},
   author={Danda, Pranav Krishna},
   year={2025},
-  url={https://github.com/<your-username>/Memora}
+  url={https://github.com/21bq1a4232/Memora}
 }
 
 @article{zhou2025agentfly,
