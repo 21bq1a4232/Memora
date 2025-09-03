@@ -6,17 +6,7 @@
   <b>🏠 Runs Locally</b> • <b>🧠 Memory-Based Learning</b> • <b>🔄 Multi-Backend</b> • <b>📊 Research-Ready</b>
 </p>
 
-<p align="center">
-  <a href="https://colab.research.google.com/github/Agent-on-the-Fly/Memento/blob/main/notebooks/memento_demo.ipynb">
-    <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
-  </a>
-  <a href="#quick-start">
-    <img src="https://img.shields.io/badge/setup-5%20minutes-brightgreen" alt="Quick Setup"/>
-  </a>
-  <a href="docs/Research.md">
-    <img src="https://img.shields.io/badge/paper-ready-blue" alt="Publication Ready"/>
-  </a>
-</p>
+
 
 ---
 
@@ -170,7 +160,6 @@ python client/agent.py --question "Compare agent architectures" > research_log.t
 - [ ] **Distributed agent coordination** across multiple instances
 - [ ] **Advanced reasoning patterns** beyond planner-executor
 
-See [docs/Research.md](docs/Research.md) for detailed technical analysis and benchmarks.
 
 ---
 
@@ -194,7 +183,6 @@ If Memora helps your work, please cite:
 }
 ```
 
-For a broader overview, please check out our survey: [Github](https://github.com/ai-agents-2030/awesome-deep-research-agent)
 
 ---
 
