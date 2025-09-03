@@ -8,35 +8,6 @@
 
 
 
----
-
-<table>
-  <tr>
-    <td align="center" width="50%">
-      <img src="Figure/f1_val_test.jpg" width="90%"/>
-      <br/>
-      <sub><b>Memora vs. Baselines on GAIA validation and test sets.</b></sub>
-    </td>
-    <td align="center" width="50%">
-      <img src="Figure/f1_tasks.jpg" width="90%"/>
-      <br/>
-      <sub><b>Ablation study of Memora across benchmarks.</b></sub>
-    </td>
-  </tr>
-  <tr>
-    <td align="center" width="50%">
-      <img src="Figure/f1_iteration.jpg" width="90%"/>
-      <br/>
-      <sub><b>Continual learning curves across memory designs.</b></sub>
-    </td>
-    <td align="center" width="50%">
-      <img src="Figure/f1_ood.jpg" width="90%"/>
-      <br/>
-      <sub><b>Memora’s accuracy improvement on OOD datasets.</b></sub>
-    </td>
-  </tr>
-</table>
-
 ## ✨ What Makes Memora Special
 
 🏠 **Runs 100% Locally** - No OpenAI API required! Uses Ollama with consumer hardware  
